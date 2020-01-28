@@ -5,6 +5,7 @@ class App extends Component{
         return(
             <div>
                 <AddMenu />
+                --------分隔符-------
                 <ul className="list-li">
                     <li>JavaScript</li>
                     <li>html</li>

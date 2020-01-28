@@ -15,6 +15,7 @@ class AddMenu extends Component{
             inputVal:e.target.value
         })
     }
+    // 添加
     toAddMenu = () =>{
         // var oldList = this.state.list;
         // var newList = oldList.concat(this.state.inputVal)
@@ -27,20 +28,30 @@ class AddMenu extends Component{
         this.setState({
             list:[...this.state.list,this.state.inputVal],
         })
-
+    }
+    // 删除当前项
+    deleteItem = (idx) =>{
+        console.log(idx)
+        let list = this.state.list;
+        list.splice(idx,1);
+        this.setState({
+            list
+        })
     }
     render(){
         return(
             <>
                 <div>
-                    <input type="text" placeholder="请输入要添加的菜名" value={this.state.inputVal} onChange={this.changeInputVal} />
+                    <label htmlFor="abc">你好</label>
+                    <input id="abc" type="text" placeholder="请输入要添加的菜名" value={this.state.inputVal} onChange={this.changeInputVal} />
                     <button onClick={this.toAddMenu}>增加菜名</button>
                 </div>
                 <ul>
                     {
                         this.state.list.map((item,idx)=>{
                             return(
-                                <li key={idx}>{item}</li>
+                                <li key={idx}>
+                                    <span dangerouslySetInnerHTML={{__html:item}}></span><button onClick={()=>this.deleteItem(idx)}>删除</button></li>
                             )
                         })
                     }
