@@ -30,9 +30,13 @@ module.exports = appInfo => {
       // plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
     // }
   };
+  // add cors config here
   config.cors = {
       origin: '*', // 访问白名单,根据你自己的需要进行设置
       allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  };
+  config.security = {
+    domainWhiteList: [ '*' ],
   };
 
   return {

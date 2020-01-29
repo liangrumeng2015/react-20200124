@@ -8,7 +8,7 @@ module.exports = app => {
         id:{   // 文章编号
             type:Number
         },
-        typeId:{  // 文章类型编号
+        typeId:{  // 文章类型编号  type表里面的id
             type:Number
         },
         title:{   // 文章标题
