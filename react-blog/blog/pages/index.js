@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import {Row,Col,List,Icon} from 'antd'
 import Axios from 'axios'
+import serviceApi from '../config/httpURI'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
@@ -59,8 +60,7 @@ const Home = (list) => {
 
 Home.getInitialProps = async() =>{
   const promise = new Promise((resolve)=>{
-    var url = 'http://127.0.0.1:7001/default/getArticleList'
-    Axios(url).then(res=>{
+    Axios(serviceApi.getArticleList).then(res=>{
       resolve(res.data)
     })
   })

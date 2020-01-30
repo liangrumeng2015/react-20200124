@@ -13,6 +13,9 @@ module.exports = app => {
         },
         orderNum:{   // 类型排序编号
             type:String
+        },
+        iconPath:{    // 图标地址
+            type:String
         }
     })
     return mongoose.model('Type',TypeSchema)

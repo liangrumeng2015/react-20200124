@@ -1,18 +1,43 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Axios from 'axios';
+import serviceApi from '../config/httpURI'
 import {Row,Col,List,Icon,Breadcrumb,Affix} from 'antd'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
-import ReactMarkDown from 'react-markdown'
-import MarkNav from 'markdown-navbar'
-import 'markdown-navbar/dist/navbar.css'
+import marked from 'marked';
+import highlightjs from 'highlight.js';
+import Tocify from '../components/tocify.tsx'
+import 'highlight.js/styles/monokai-sublime.css'
 import '../public/style/pages/Detail.css'
 
 const Detail = (data) => {
-  const {markdown} = data
+  const tocify = new Tocify();
+  const render = new marked.Renderer();
+  // ### abc
+  render.heading = function(text,level,raw){
+    const anchor = tocify.add(text,level)
+    return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`
+  }
+
+  marked.setOptions({
+    renderer:render,   // 必填，渲染自定义格式
+    gfm:true,   // 启动类似github的marked
+    pedantic:false,    // 容错机制
+    sanitize:false,    // 原始输出，忽略html
+    tables:true,       // 支持table，gfm必须为true
+    breaks:false,      // 支持换行符，gfm必须为true
+    smartLists:true,   // 优化列表
+    smartypants:false,
+    highlight:function (code){    // 代码高亮
+      return highlightjs.highlightAuto(code).value;
+    }
+  })
+  let html = marked(data[0].articleContent);
+
+
 
   return(
     <div>
@@ -38,13 +63,7 @@ const Detail = (data) => {
                 <span><Icon type="folder" />视频教程</span>
                 <span><Icon type="fire" />123456人</span>
               </div>
-              <div className="detailed-content">
-                <ReactMarkDown 
-                  source={markdown}
-                  escapeHtml={false}
-
-                />
-              </div>
+              <div className="detailed-content" dangerouslySetInnerHTML={{__html:html}}></div>
             </div>
           </div>
         </Col>
@@ -54,11 +73,7 @@ const Detail = (data) => {
           <Affix offsetTop={5}>
             <div className="detailed-nav comm-box">
               <div className="nav-title">文章目录</div>
-              <MarkNav
-                className="article-menu"
-                source={markdown}
-                ordered={false}
-              />
+              {tocify && tocify.render()}
             </div>
           </Affix>
         </Col>
@@ -70,12 +85,10 @@ const Detail = (data) => {
 
 Detail.getInitialProps = async(context) =>{
   const promise = new Promise((resolve)=>{
-
     let _id = context.query.id;
-    let url = 'http://127.0.0.1:7001/default/getArticleById/'+_id;
+    let url = serviceApi.getArticleById+_id;
     Axios(url).then(res=>{
-      console.log('detail接口返回',res.data)
-      resolve(res.data.module[0])
+      resolve(res.data.module)
     }).catch(err=>{
       console.log(err);
     })

@@ -12,16 +12,17 @@ class ArticleService extends Service{
     async getArticleById(id){
         const {ctx} = this;
         let result = await ctx.model.Article.find({'_id':ObjectId(id)})
+        const articleType = await ctx.model.Type.find({id})
+        return [...result,...articleType];
+    }
 
-        const [articleType] = await ctx.model.Type.find({id})
-        const {typeName,orderNum} = articleType;
-        result[0].typeName = typeName;
-        result[0].orderNum = orderNum;
-        
+    async getTypeInfo(){
+        const {ctx} = this;
+        const result = await ctx.model.Type.find({});
         console.log(result);
-
         return result;
     }
 }
+
 module.exports = ArticleService;
 

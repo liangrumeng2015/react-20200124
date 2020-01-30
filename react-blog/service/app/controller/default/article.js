@@ -13,6 +13,11 @@ class ArticleController extends Controller{
         const id = ctx.params._id;
         ctx.body = {module:await ctx.service.default.article.getArticleById(id)}
     }
+    // 获取类型信息
+    async getTypeInfo(){
+        const {ctx} = this;
+        ctx.body = {module:await ctx.service.default.article.getTypeInfo()}
+    }
 }
 module.exports = ArticleController;
 
