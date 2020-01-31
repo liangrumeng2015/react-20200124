@@ -8,13 +8,10 @@ import '../public/style/component/Header.css'
 
 const Header = () => {
     const [navArray,setNavArray] = useState([])
-    console.log('00000',navArray)
     useEffect(()=>{
-        console.log('11111')
         let fetchData = async()=>{
             let result = await Axios.post(serviceApi.getTypeInfo).then(
                 res=>{
-                    console.log(res.data.module)
                     return res.data.module
                 }
             )
@@ -22,6 +19,16 @@ const Header = () => {
         }
         fetchData()
     },[])
+    // nav跳转
+    const toSkip = (e) =>{
+        if(e.key == 0){   // 首页
+            Router.push('/')
+        }else if(e.key == 1){   // 视频
+            Router.push({pathname:'/list',query:{id:e.key}})
+        }else if(e.key == 2){  // 生活
+            console.log('生活')
+        }
+    }
     return(
         <div className="header">
         <Row type="flex" justify="center">
@@ -30,15 +37,16 @@ const Header = () => {
                 <span className="header-txt">专注于前端开发</span>
             </Col>
             <Col xs={0} sm={0} md={14} lg={8} xl={6}>
-                
-                <Menu mode="horizontal">
+                <Menu mode="horizontal" onClick={toSkip}>
                     {
-                        navArray.map(item=>(
-                            <Menu.Item key={item._id}>
-                                <Icon type={item.iconPath} />
-                                {item.typeName}
-                            </Menu.Item>
-                            )
+                        navArray.map((item,idx)=>{
+                            return(
+                                <Menu.Item key={idx}>
+                                    <Icon type={item.iconPath} />
+                                    {item.typeName}
+                                </Menu.Item>
+                                )
+                            }
                         )
                     }
                 </Menu>

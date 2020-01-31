@@ -11,16 +11,21 @@ class ArticleService extends Service{
 
     async getArticleById(id){
         const {ctx} = this;
-        let result = await ctx.model.Article.find({'_id':ObjectId(id)})
+        const result = await ctx.model.Article.find({'_id':ObjectId(id)});
         const articleType = await ctx.model.Type.find({id})
-        return [...result,...articleType];
+        return {result,articleType};
     }
 
     async getTypeInfo(){
         const {ctx} = this;
         const result = await ctx.model.Type.find({});
-        console.log(result);
         return result;
+    }
+
+    async getListById(id){
+        const {ctx} = this;
+        const result = await ctx.model.Article.find({'typeId':id})
+        return result
     }
 }
 

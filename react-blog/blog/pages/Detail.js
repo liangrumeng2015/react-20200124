@@ -12,6 +12,7 @@ import highlightjs from 'highlight.js';
 import Tocify from '../components/tocify.tsx'
 import 'highlight.js/styles/monokai-sublime.css'
 import '../public/style/pages/Detail.css'
+import markedOption from '../config/Marked'
 
 const Detail = (data) => {
   const tocify = new Tocify();
@@ -21,23 +22,21 @@ const Detail = (data) => {
     const anchor = tocify.add(text,level)
     return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`
   }
-
-  marked.setOptions({
-    renderer:render,   // 必填，渲染自定义格式
-    gfm:true,   // 启动类似github的marked
-    pedantic:false,    // 容错机制
-    sanitize:false,    // 原始输出，忽略html
-    tables:true,       // 支持table，gfm必须为true
-    breaks:false,      // 支持换行符，gfm必须为true
-    smartLists:true,   // 优化列表
-    smartypants:false,
-    highlight:function (code){    // 代码高亮
-      return highlightjs.highlightAuto(code).value;
-    }
-  })
-  let html = marked(data[0].articleContent);
-
-
+  console.log('markedOption===',markedOption);
+  // marked.setOptions({
+  //   renderer:render,   // 必填，渲染自定义格式
+  //   gfm:true,   // 启动类似github的marked
+  //   pedantic:false,    // 容错机制
+  //   sanitize:false,    // 原始输出，忽略html
+  //   tables:true,       // 支持table，gfm必须为true
+  //   breaks:false,      // 支持换行符，gfm必须为true
+  //   smartLists:true,   // 优化列表
+  //   smartypants:false,
+  //   highlight:function (code){    // 代码高亮
+  //     return highlightjs.highlightAuto(code).value;
+  //   }
+  // })
+  let html = marked(data.result[0].articleContent);
 
   return(
     <div>
@@ -88,6 +87,7 @@ Detail.getInitialProps = async(context) =>{
     let _id = context.query.id;
     let url = serviceApi.getArticleById+_id;
     Axios(url).then(res=>{
+      console.log(res.data);
       resolve(res.data.module)
     }).catch(err=>{
       console.log(err);

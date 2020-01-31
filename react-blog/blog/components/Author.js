@@ -5,7 +5,7 @@ const Author = () =>{
     return(
         <div className="author-div comm-box">
             <div>
-                <Avatar size={100} src="" />
+                <Avatar size={100} src="https://q4.qlogo.cn/g?b=qq&nk=2018753540&s=100" />
                 <div className="author-introduction">
                     描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
                     <Divider>社交账号</Divider>
