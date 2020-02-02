@@ -21,7 +21,7 @@ module.exports = app => {
             type:String
         },
         addTime:{   // 发布文章的时间
-            type:Number
+            type:String
         },
         viewCount:{  // 浏览次数
             type:Number

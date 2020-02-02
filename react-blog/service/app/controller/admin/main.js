@@ -20,6 +20,16 @@ class MainController extends Controller{
         const {ctx} = this;
         ctx.body = await ctx.service.admin.main.getTypeInfo();
     }
+
+    async saveAndRelease(){
+        const {ctx} = this;
+        ctx.body = await ctx.service.admin.main.saveAndRelease();
+    }
+
+    async updateArticle(){
+        const {ctx} = this;
+        ctx.body = await ctx.service.admin.main.updateArticle();
+    }
 }
 module.exports = MainController;
 

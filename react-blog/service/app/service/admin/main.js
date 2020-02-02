@@ -1,4 +1,5 @@
 const Service = require('egg').Service;
+const ObjectId = require('mongodb').ObjectId;
 
 class MainService extends Service{
     // 登录接口
@@ -29,6 +30,7 @@ class MainService extends Service{
         }
         return result;
     }
+
     // 获取类型信息
     async getTypeInfo(){
         const {ctx} = this;
@@ -45,6 +47,56 @@ class MainService extends Service{
         }
         return result;
     }
+
+    // 保存发布、修改文章
+    async saveAndRelease(){
+        const {ctx} = this;
+        const data = ctx.request.body
+        let result;
+        const tmpArticle = await ctx.model.Article.create(data);
+        if(tmpArticle){
+            result = {
+                module:tmpArticle,
+                success:true
+            }
+        }else{
+            result = {
+                success:false
+            }
+        }
+        return result 
+    }
+
+    // 根据_id 更新文章
+    async updateArticle(){
+        const {ctx} = this;
+        let result;
+        const _id = ctx.request.body._id;
+        const data = {
+            title:ctx.request.body.articleTitle,
+            articleContent:ctx.request.body.articleContent,
+            typeId:ctx.request.body.articleId,
+            introduce:ctx.request.body.introducemd,
+            addTime:ctx.request.body.showDate,
+            viewCount:ctx.request.body.viewCount
+        }
+        const tmpArticle = await ctx.model.Article.update({'_id':_id},data);
+        if(tmpArticle.ok == 1){
+            result = {
+                success:true,
+                msg:'修改成功'
+            }
+        }else{
+            result = {
+                success:false,
+                msg:'修改失败'
+            }
+        }
+        return result
+    }
+
+
+
 }
 
 module.exports = MainService;

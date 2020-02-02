@@ -19,6 +19,7 @@ function AddArticle(props){
    const [updateDate,setUpdateDate] = useState() //修改日志的日期
    const [typeInfo ,setTypeInfo] = useState([]) // 文章类别信息
    const [selectedType,setSelectType] = useState('选择文章类型') //选择的文章类别
+   const [viewCount,setViewCount] = useState('999');   // 文章阅读次数
 
    useEffect(()=>{
     getTypeInfo()
@@ -75,6 +76,21 @@ function AddArticle(props){
       }else if(!showDate){
         message.error('请选择文章发布时间')
         return false;
+      }
+      var data = {
+        title:articleTitle,
+        articleContent:articleContent,
+        typeId:articleId,
+        introduce:introducemd,
+        addTime:showDate,
+        viewCount:viewCount
+      }
+      if(articleId == 0){   // 0增加   
+        const result = await reqAxios(serviceApi.saveAndRelease,'post',data,true);
+        console.log('添加文章接口返回',result)
+      }else if(articleId == 1){  // 1修改
+        const result = await reqAxios(serviceApi.updateArticle,'post',data,true);
+        console.log('修改文章接口返回',result);
       }
       message.success('成功')
   }
