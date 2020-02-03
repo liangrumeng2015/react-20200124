@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import marked from 'marked'
-import '../static/style/addArticle.css'
+import '../../static/style/addArticle.css'
 import {Row,Col,Input,Select,Button,DatePicker, message} from 'antd'
-import serviceApi from '../config/httpURI'
-import reqAxios from '../config/Axios'
+import serviceApi from '../../config/httpURI'
+import reqAxios from '../../config/Axios'
 const { Option } = Select;
 const { TextArea } = Input;
 

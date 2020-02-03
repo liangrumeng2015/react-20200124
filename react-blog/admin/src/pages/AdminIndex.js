@@ -1,23 +1,31 @@
 import React,{useState} from 'react';
 import {Route} from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
-import AddArticle from './AddArticle'
+import AddArticle from './Index/AddArticle'
+import ArticleList from './Index/ArticleList'
 import '../static/style/adminIndex.css'
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-function AdminIndex() {
+function AdminIndex(props) {
     const [collapsed,setCollapsed] = useState(false)
 
     const onCollapse = collapsed => {
         setCollapsed(collapsed)
     };
+    const currentKey = (current)=>{
+      if(current.key == 'addArticle'){  // 添加文章
+        props.history.push('/index/add')
+      }else if(current.key == 'articleList'){
+        props.history.push('/index/list')
+      }
+    }
 
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={currentKey}>
             <Menu.Item key="1">
               <Icon type="pie-chart" />
               <span>工作台</span>
@@ -35,8 +43,8 @@ function AdminIndex() {
                 </span>
               }
             >
-              <Menu.Item key="3">添加文章</Menu.Item>
-              <Menu.Item key="4">文章列表</Menu.Item>
+              <Menu.Item key="addArticle">添加文章</Menu.Item>
+              <Menu.Item key="articleList">文章列表</Menu.Item>
             </SubMenu>
             <Menu.Item key="9">
               <Icon type="file" />
@@ -52,7 +60,9 @@ function AdminIndex() {
             </Breadcrumb>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               <div>
-                <Route path="" component={AddArticle}  />
+                <Route path="/index" exact  component={AddArticle}  />
+                <Route path="/index/add" exact component={AddArticle}  />
+                <Route path="/index/list" exact component={ArticleList}  />
               </div>
             </div>
           </Content>

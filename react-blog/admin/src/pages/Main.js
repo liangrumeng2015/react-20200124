@@ -9,8 +9,7 @@ function Main(){
         <div>
             <Router>
                 <Route path="/" exact component={Login} />
-                <Route path="/index" component={AdminIndex} />
-
+                <Route path="/index"   component={AdminIndex} />
             </Router>
         </div>
     )
