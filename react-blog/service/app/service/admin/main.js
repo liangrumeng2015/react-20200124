@@ -95,6 +95,13 @@ class MainService extends Service{
         return result
     }
 
+    // 
+    async getArticleList(){
+        const {ctx} = this;
+        const result = await ctx.model.Article.find({})
+        return result;
+    }
+
 
 
 }

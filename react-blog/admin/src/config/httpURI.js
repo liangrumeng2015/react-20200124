@@ -4,7 +4,8 @@ var serviceApi = {
     checkLogin: httpUrI + 'checkLogin',   // 登录接口   post
     getTypeInfo: httpUrI + 'getTypeInfo',   // 获取类型信息   get
     saveAndRelease: httpUrI + 'saveAndRelease',   // 添加文章 post
-    updateArticle: httpUrI + 'updateArticle'   // 更新文章内容 post
+    updateArticle: httpUrI + 'updateArticle' ,  // 更新文章内容 post
+    getArticleList: httpUrI + 'getArticleList',   // 获取文章列表   post
 }
 
 export default serviceApi

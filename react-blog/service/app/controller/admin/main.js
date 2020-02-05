@@ -30,6 +30,10 @@ class MainController extends Controller{
         const {ctx} = this;
         ctx.body = await ctx.service.admin.main.updateArticle();
     }
+    async getArticleList(){
+        const {ctx} = this;
+        ctx.body = await ctx.service.admin.main.getArticleList();
+    }
 }
 module.exports = MainController;
 
